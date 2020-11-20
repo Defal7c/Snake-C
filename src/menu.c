@@ -1,26 +1,28 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <curses.h>
+#include "controls.h"
 
 int inMenu = 1;
-char OPT[] = "cu";
+int OPT = 1;
 void MainMenu(void);
 void OptionsMenu(void);
+
+char mv[] = "";
 
 void SelectMenu()
 {
     while(inMenu == 1)
     {
-        if(strcmp(OPT, "cu") == 0)
-        {
-            MainMenu();
-        }else if(strcmp(OPT, "2") == 0)
-        {
-            OptionsMenu();
-        }
+        if(OPT == 0) inMenu = 0;
+        else if(OPT == 1) MainMenu();
+        else if(OPT == 2) OptionsMenu();
     }
 }
+
+int selected = 0;
+char * MENUS[] = { "START", "Options", "Manual", "Quit" };
+char ch;
 
 void MainMenu()
 {
@@ -34,24 +36,24 @@ void MainMenu()
     printf("                             Simulator 2020\n");
     printf("-------------------------------------------\n");
 
-    printf("1 - START GAME\n");
-    printf("2 - OPTIONS\n");
-    printf("3 - EXIT\n");
-    scanf("%s", OPT);
-    printf("%s\n", OPT);
-    
-    if(strcmp(OPT, "1") == 0)
+    for(int i = 0; i < 4; i++)
     {
-        inMenu = 0;
+        printf("[");
+        if(i == selected) printf("*"); else printf(" ");
+        printf("] - ");
+        printf("%s\n", MENUS[i]);
     }
+    ch = fgetc(stdin);
+    if(ch==0x0A) OPT = selected;
+    else if(ch == 's') { if(selected != 3) selected++; } 
+    else if(ch == 'w') { if(selected != 0) selected--; }
 }
+
 
 int sel = 0;
 int MAXOPT = 1;
-char * OPTIONS[] = {"Disable Colors", "Cry out loud"};
-char mv[] = "";
-
-int key;
+char * OPTIONS[] = {"Disable Colors", "Go Back"};
+int arrow;
 
 void OptionsMenu()
 {
@@ -74,15 +76,10 @@ void OptionsMenu()
         printf("] - ");
         printf("%s\n", OPTIONS[i]);
     }
-    switch(getch())
-    {
-        case 80:
-            if(sel != MAXOPT) sel++;
-            break;
-        default:
-            break;
-    }
+    scanf("%s", mv);
 
-    // if(strcmp(mv, "d") == 0) if(sel != MAXOPT) sel++;
-    // else if(strcmp(mv, "u") == 0) if(sel != 0) sel--;
+    if(strcmp(mv, DOWN) == 0)
+    {
+        if(sel != MAXOPT) sel++;
+    }else if(strcmp(mv, UP) == 0) if(sel != 0) sel--;
 }
