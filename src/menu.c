@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <curses.h>
 
 int inMenu = 1;
 char OPT[] = "cu";
@@ -46,8 +47,11 @@ void MainMenu()
 }
 
 int sel = 0;
+int MAXOPT = 1;
 char * OPTIONS[] = {"Disable Colors", "Cry out loud"};
 char mv[] = "";
+
+int key;
 
 void OptionsMenu()
 {
@@ -61,7 +65,7 @@ void OptionsMenu()
     printf("      |_|                          \n");
     printf("-------------------------------------------\n");
     printf("\n");
-    
+
     //this is the best code I've ever written in my entire life.
     for(int i = 0; i < 2; i++)
     {
@@ -70,12 +74,15 @@ void OptionsMenu()
         printf("] - ");
         printf("%s\n", OPTIONS[i]);
     }
-    scanf("%s", mv);
-    printf("%s\n", mv);
-
-    if(strcmp(mv, "d") == 0)
+    switch(getch())
     {
-        sel++;
-        return;
+        case 80:
+            if(sel != MAXOPT) sel++;
+            break;
+        default:
+            break;
     }
+
+    // if(strcmp(mv, "d") == 0) if(sel != MAXOPT) sel++;
+    // else if(strcmp(mv, "u") == 0) if(sel != 0) sel--;
 }
