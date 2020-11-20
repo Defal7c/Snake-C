@@ -1,0 +1,5 @@
+LEMBRAR
+
+gcc src/main.c -I include -o obj/main.o
+
+gcc apps/test.c obj/main.o -I include -o bin/snake
