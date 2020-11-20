@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <string.h>
 
 void Red()
 {
@@ -8,7 +7,7 @@ void Red()
 
 void Yellow()
 {
-    printf("\033[33m");
+    printf("\e[33m");
 }
 
 void ResetColors()

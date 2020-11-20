@@ -4,7 +4,6 @@
 #include <time.h>
 #include "colors.h"
 
-
 //stats
 int score;
 char MOVE[] = "c";
@@ -35,7 +34,7 @@ void MakeGrid()
                 printf("%s", APP);
                 ResetColors();
             }else if(snakecoords[0] == y && i == snakecoords[1])
-            {
+            {   
                 Yellow();
                 printf("%s", SNK);
                 ResetColors();
@@ -50,7 +49,7 @@ void Movement()
 {
     printf("Choose direction: \n");
     scanf("%s", MOVE);
-    printf("%s\n", MOVE);
+    //printf("%s\n", MOVE);
 
     //strcmp
 
