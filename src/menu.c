@@ -44,7 +44,8 @@ void MainMenu()
         printf("%s\n", MENUS[i]);
     }
     ch = fgetc(stdin);
-    if(ch==0x0A) OPT = selected;
+
+    if(ch==0x0A) OPT = selected + 1;
     else if(ch == 's') { if(selected != 3) selected++; } 
     else if(ch == 'w') { if(selected != 0) selected--; }
 }
@@ -52,7 +53,8 @@ void MainMenu()
 
 int sel = 0;
 int MAXOPT = 1;
-char * OPTIONS[] = {"Disable Colors", "Go Back"};
+char * color = "Enabled.";
+char * OPTIONS[] = {"Colors", "Go Back"};
 int arrow;
 
 void OptionsMenu()
@@ -74,10 +76,15 @@ void OptionsMenu()
         printf("[");
         if(i == sel) printf("*"); else printf(" ");
         printf("] - ");
-        printf("%s\n", OPTIONS[i]);
+        if(i == 0) printf("%s - [ %s ]\n", OPTIONS[i], color);
+        else printf("%s\n", OPTIONS[i]);
     }
-    scanf("%s", mv);
+    mv = fgetc(stdin);
 
+    if(mv == "\n") 
+    {
+        if(sel == 0) color = "Disabled.";
+    }
     if(strcmp(mv, DOWN) == 0)
     {
         if(sel != MAXOPT) sel++;

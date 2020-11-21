@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 int playing = 1;
 
@@ -20,6 +21,7 @@ int main()
     randomPOS();
     while(playing == 1)
     {
+        system("clear");
         Collision();
         MakeGrid();
         Movement();
