@@ -1,6 +1,11 @@
 #include <stdio.h>
 #include <string.h>
-#include <stdlib.h>
+
+#ifndef _WIN32
+    #include <ncurses.h>
+#else
+    #include <conio.h>
+#endif 
 
 int playing = 1;
 
@@ -16,15 +21,19 @@ void Collision(void);
 
 int main()
 {
-    SelectMenu();
+    initscr();
+    //raw();
 
+    SelectMenu();
+    clear();
     randomPOS();
     while(playing == 1)
     {
-        system("clear");
+        refresh();
         Collision();
         MakeGrid();
         Movement();
     }
+    endwin();
     return 0;
 }
