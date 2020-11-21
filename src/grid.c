@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <ncurses.h>
 #include <string.h>
 #include <stdlib.h>
 #include <time.h>
@@ -13,36 +14,58 @@ int lvlSize = 7;
 int snakecoords[2];
 int applecoords[2];
 
+//Main Window
+int game_height = 9;
+int game_width = 9;
+int game_y = 7;
+int game_x = 5;
+
+//Hud Window
+int hud_height = 5;
+int hud_width = 15;
+int hud_x = 0;
+int hud_y = 0;
+
 //art
-char * BG = "X";
-char * SNK = "O";
-char * APP = "G";
+char BG = 'X';
+char SNK = 'O';
+char APP = 'G';
+
 
 void MakeGrid()
 {
-    printf("SCORE: %d\n", score);
-    printf("Snake: %d, %d\n", snakecoords[0], snakecoords[1]);
-    printf("Apple: %d, %d\n", applecoords[0], applecoords[1]);
+    WINDOW * mainwin = newwin(game_height,game_width,game_y,game_x);
+    box(mainwin,0,0);
 
-    for(int i = 0; i < lvlSize; i++)
+    //HUD
+    WINDOW * hud = newwin(hud_height, hud_width, hud_y, hud_x);
+    box(hud,0,0);
+    mvwprintw(hud,1,1,"SCORE: %d\n", score);
+    mvwprintw(hud,2,1,"Snake: %d, %d\n", snakecoords[0], snakecoords[1]);
+    mvwprintw(hud,3,1,"Apple: %d, %d\n", applecoords[0], applecoords[1]);
+
+    for(int i = 1; i < lvlSize + 1; i++)
     {
-        for(int y = 0; y < lvlSize; y++)
+        for(int y = 1; y < lvlSize + 1; y++)
         {
             if(applecoords[0] == y && applecoords[1] == i)
             {
                 Red();
-                printf("%s", APP);
+                mvwaddch(mainwin,applecoords[1],applecoords[0],APP);
                 ResetColors();
             }else if(snakecoords[0] == y && i == snakecoords[1])
             {   
                 Yellow();
-                printf("%s", SNK);
+                mvwaddch(mainwin,snakecoords[1],snakecoords[0],SNK);
                 ResetColors();
-            }else printf("%s", BG);
+            }else 
+            {
+                mvwaddch(mainwin,i,y, BG);
+            }
         }
-    printf("%d", i);
-    printf("\n");
     }
+    wrefresh(mainwin);
+    wrefresh(hud);
 }
 
 void Movement()

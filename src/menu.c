@@ -16,11 +16,11 @@ void SelectMenu()
 {
     while(inMenu == 1)
     {
-        clear();
         if(OPT == 0) MainMenu();
         else if(OPT == 1) inMenu = 0;
         else if(OPT == 2) OptionsMenu();
         //else if(OPT == 4) Manual();
+        //else if(OPT == 5) cry();
     }
 }
 
@@ -45,6 +45,7 @@ int cursorPOS[2] = {0, 0};
 
 void MainMenu()
 {
+    refresh();
     WINDOW * logo = newwin(logo_height, logo_width,logo_y,logo_x);
     box(logo, 0,0);
     mvwprintw(logo,1,1,"  ____      _          _       _           ");
@@ -84,14 +85,14 @@ void MainMenu()
 
 int sel = 0;
 int MAXOPT = 1;
+int COLORS = 1;
 char * OPTIONS[] = {"Disable Colors", "Go Back"};
-int arrow;
 
 //Options Window
 int optmenu_height = 6;
-int optmenu_width = 20;
+int optmenu_width = 21;
 int optmenu_x = 10;
-int optmenu_y = 15;
+int optmenu_y = 10;
 
 //Options Logo
 int opt_height = 8;
@@ -99,6 +100,7 @@ int opt_width = 45;
 
 void OptionsMenu()
 {
+    clear();
     WINDOW * opt = newwin(opt_height, opt_width, logo_y, logo_x);
     box(opt, 0,0);
     //mvwprintw(opt,1,1,"%d", sel);
@@ -125,11 +127,22 @@ void OptionsMenu()
         mvwaddch(optmenu,i+1,3,']');
         mvwprintw(optmenu,i+1,6,"%s", OPTIONS[i]);
     }
-    move(cursorPOS[0], cursorPOS[1]);
     int ch = wgetch(optmenu);
 
     if(ch == ENTER)
     {
+        if(sel == 0) 
+        {
+            if(COLORS == 1) 
+            {
+                OPTIONS[0] == "Enable Colors";
+                COLORS = 0;
+            }else 
+            {
+                OPTIONS[0] == "Disable Colors";
+                COLORS == 1;
+            }
+        }
         if(sel == 1) OPT = 0;
     }
     switch(ch)

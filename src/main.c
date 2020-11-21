@@ -25,9 +25,11 @@ int main()
     //raw();
 
     SelectMenu();
+    clear();
     randomPOS();
     while(playing == 1)
     {
+        refresh();
         Collision();
         MakeGrid();
         Movement();
