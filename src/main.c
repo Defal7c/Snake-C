@@ -16,14 +16,18 @@ void SelectMenu(void);
 
 void randomPOS(void);
 void MakeGrid(void);
-void Movement(void);
 void Collision(void);
 
 int main()
 {
     initscr();
     //raw();
-
+    if(!has_colors())
+    {
+        printw("Terminal doesn't support colors!!");
+        getch();
+        return -1;
+    }
     SelectMenu();
     clear();
     randomPOS();
@@ -32,7 +36,6 @@ int main()
         refresh();
         Collision();
         MakeGrid();
-        Movement();
     }
     endwin();
     return 0;

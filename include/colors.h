@@ -1,16 +1,14 @@
-#include <stdio.h>
+#include <ncurses.h>
 
-void Red()
+#define BG_GRASS 1
+#define EMPTY 1
+#define APPLE_GRASS 2
+#define SNAKE_GRASS 3
+ 
+void Colors(void)
 {
-    printf("\033[31m");
-}
-
-void Yellow()
-{
-    printf("\e[33m");
-}
-
-void ResetColors()
-{
-    printf("\033[0m");
+    start_color();
+    init_pair(BG_GRASS, COLOR_GREEN, COLOR_GREEN);
+    init_pair(APPLE_GRASS, COLOR_RED, COLOR_GREEN);
+    init_pair(SNAKE_GRASS, COLOR_YELLOW, COLOR_GREEN);
 }
